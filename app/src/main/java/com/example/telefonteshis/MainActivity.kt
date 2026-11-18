@@ -184,7 +184,15 @@ class MainActivity : Activity() {
         ramText.text = "Kullanılan ${mb(usedRam)} / ${mb(mi.totalMem)}  (%$ramPct)\n" +
             "Boş (kullanılabilir): ${mb(mi.availMem)}   Önbellek: ${mb(mem["Cached"] ?: 0)}\n" +
             "Swap/zRAM: ${mb(swapUsed)} / ${mb(swapTotal)}" +
-            if (mi.lowMemory) "\n⚠ SİSTEM DÜŞÜK BELLEK MODUNDA" else ""
+            (if (mi.lowMemory) "\n⚠ SİSTEM DÜŞÜK BELLEK MODUNDA" else "") +
+            "\n\nDağılım:\n" +
+            "  Uygulama+servis verisi: ${mb(mem["AnonPages"] ?: 0)}\n" +
+            "  Çekirdek (Slab+Stack+PageTbl): ${mb((mem["Slab"] ?: 0) + (mem["KernelStack"] ?: 0) + (mem["PageTables"] ?: 0))}\n" +
+            "  Paylaşılan (Shmem/GPU/grafik): ${mb(mem["Shmem"] ?: 0)}\n" +
+            "  Önbellek (gerekirse silinir): ${mb((mem["Cached"] ?: 0) + (mem["Buffers"] ?: 0))}\n" +
+            "  Tamamen boş: ${mb(mem["MemFree"] ?: 0)}\n" +
+            "Hangi uygulama? Android bunu uygulamalara göstermez.\n" +
+            "PC'den: adb shell dumpsys meminfo   (en üstte uygulama başına RAM)"
         if (mi.lowMemory) warnings += "Sistem düşük bellek durumunda: arka plandaki uygulamalar sürekli kapatılıyor."
         else if (ramPct > 88) warnings += "RAM %$ramPct dolu. Arka plan uygulamaları RAM'i tüketiyor olabilir."
         if (swapTotal > 0 && swapUsed * 100 / swapTotal > 70) warnings += "Swap yoğun kullanılıyor, bu telefonu belirgin yavaşlatır."
