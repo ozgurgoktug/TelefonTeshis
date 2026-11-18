@@ -113,7 +113,7 @@ class CountActivity : ComponentActivity() {
         override fun onStopTrackingTouch(s: SeekBar) {}
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) startCamera()
         else countText.text = "Kamera izni yok. Galeriden fotoğraf seçebilirsiniz."
