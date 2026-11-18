@@ -213,8 +213,9 @@ class MainActivity : Activity() {
         val freqPct = if (active.isNotEmpty()) active.map { (100 * it.cur / it.max).toInt() }.average().toInt() else 0
         val pct = procPct ?: freqPct
         cpuBar.progress = pct
-        val src = if (procPct != null) "" else "  (tahmin: frekans/maks. frekans; /proc/stat kapalı)"
-        cpuText.text = "Kullanım: %$pct$src\n" + cs.joinToString("\n") {
+        val head = if (procPct != null) "Kullanım: %$pct"
+        else "Frekans seviyesi: %$pct  (CPU yükü DEĞİL; Android yük bilgisini uygulamalara vermiyor)"
+        cpuText.text = head + "\n" + cs.joinToString("\n") {
             "Çekirdek ${it.idx}: " + when {
                 !it.online -> "kapalı"
                 it.cur > 0 -> "${it.cur / 1000} MHz / ${it.max / 1000} MHz"
