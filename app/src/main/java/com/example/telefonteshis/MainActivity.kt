@@ -77,6 +77,10 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.parseColor("#121212"))
         }
         root.addView(label(22f, bold = true).apply { text = "Telefon Teşhis" })
+        root.addView(Button(this).apply {
+            text = "Nesne Sayıcı (kamera / fotoğraf)"
+            setOnClickListener { startActivity(Intent(this@MainActivity, CountActivity::class.java)) }
+        })
         verdict = label(15f, bold = true).apply { setPadding(0, dp(8), 0, dp(12)) }
         root.addView(verdict)
 
